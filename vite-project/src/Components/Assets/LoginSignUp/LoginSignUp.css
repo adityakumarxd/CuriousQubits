@@ -1,0 +1,87 @@
+/* Centering the Form on Page */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    margin: 0;
+    background: #121212; /* Dark theme for Spotify feel */
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Login Container */
+  .login-container {
+    width: 100%;
+    max-width: 350px;
+    padding: 20px;
+    text-align: center;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Logo Styling */
+  .logo {
+    width: 80px;
+    margin-bottom: 10px;
+  }
+  
+  /* Input Field Styling */
+  .input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 8px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    background: white;
+  }
+  
+  .input-group label {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  
+  input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    padding: 5px;
+  }
+  
+  /* Forgot Password & Signup Link */
+  .forgot-password {
+    text-align: right;
+    margin-bottom: 15px;
+  }
+  
+  .forgot-password a,
+  .signup-link a {
+    color: #1db954;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 10px;
+    background: #1db954;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .signup-link {
+    margin-top: 10px;
+  }
+  
