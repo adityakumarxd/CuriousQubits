@@ -1,45 +1,31 @@
+require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
-const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
 const passport = require("passport");
 const SpotifyStrategy = require("passport-spotify").Strategy;
-
-dotenv.config();
+const session = require("express-session");
+const axios = require("axios");
+const cors = require("cors");
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-// Middleware
+// ✅ CORS Setup
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
-app.use(express.json());
-app.use(cookieParser());
 
-// Session Middleware
+// ✅ Session Setup
 app.use(
   session({
     secret: "your-secret-key",
     resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // HTTPS ho to `true`
+    saveUninitialized: false,
+    cookie: { secure: false }, // Set to `true` if using HTTPS
   })
 );
 
-// Passport Initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Passport Serialization
-passport.serializeUser((user, done) => {
-  done(null, user.profile); // 🔹 Store full profile instead of just ID
-});
-
-passport.deserializeUser((profile, done) => {
-  done(null, profile); // 🔹 Directly use profile object
-});
-
-// Spotify OAuth Setup
+// ✅ Spotify Passport Strategy
 passport.use(
   new SpotifyStrategy(
     {
@@ -48,29 +34,70 @@ passport.use(
       callbackURL: "http://localhost:5000/auth/spotify/callback",
     },
     (accessToken, refreshToken, expires_in, profile, done) => {
+      console.log("Authenticated User:", profile.displayName); // Debugging
       return done(null, { profile, accessToken });
     }
   )
 );
 
-// Routes
-app.get("/", (req, res) => {
-  res.send("Backend is Running! 🚀");
+// ✅ Serialize & Deserialize User
+passport.serializeUser((user, done) => {
+  done(null, user);
 });
 
-// Spotify Login Route
-app.get("/auth/spotify", passport.authenticate("spotify", { scope: ["user-top-read"] }));
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
+});
 
-// Spotify Callback Route
+// ✅ Auth Route
 app.get(
-  "/auth/spotify/callback",
-  passport.authenticate("spotify", { failureRedirect: "/" }),
-  (req, res) => {
-    res.send(`Login Successful! Welcome, ${req.user.displayName || "User"}`);
-  }
+  "/auth/spotify",
+  passport.authenticate("spotify", { scope: ["user-top-read"] })
 );
 
-// Start Server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+app.get(
+  "/auth/spotify/callback",
+  passport.authenticate("spotify", {
+    failureRedirect: "/auth/fail",
+    successRedirect: "http://localhost:3000/dashboard",
+  })
+);
+
+// ✅ Logout Route
+app.get("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) return res.status(500).send("Logout Failed");
+    req.session.destroy(() => {
+      res.redirect("http://localhost:3000/");
+    });
+  });
 });
+
+// ✅ Debug Route (Check User in Session)
+app.get("/debug", (req, res) => {
+  console.log("Session User:", req.user); // Debugging
+  res.json({ user: req.user || "No user in session" });
+});
+
+// ✅ Protected API Route
+app.get("/api/spotify/top-artists", async (req, res) => {
+  if (!req.user || !req.user.accessToken) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  try {
+    const response = await axios.get("https://api.spotify.com/v1/me/top/artists", {
+      headers: { Authorization: `Bearer ${req.user.accessToken}` },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch data" });
+  }
+});
+
+// ✅ Start Server
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
+});
+
