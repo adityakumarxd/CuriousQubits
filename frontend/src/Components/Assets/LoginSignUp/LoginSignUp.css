@@ -1,0 +1,165 @@
+/* Gradient Background styles for login page */
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  padding: 0;
+}
+
+/* Ensure login container is properly styled */
+.login-container {
+  width: 100%;
+  max-width: 380px;
+  padding: 35px 30px;
+  text-align: center;
+  background: white; /* Fully opaque background */
+  border-radius: 16px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+  margin: 0; /* Remove any margin that might be causing spacing */
+  position: relative; /* Ensure it's positioned properly */
+  z-index: 1; /* Make sure it's above any other elements */
+}
+
+
+
+/* 💡 Login Container - Single Unified Card */
+.login-container {
+  width: 100%;
+  max-width: 380px;
+  padding: 35px 30px;
+  text-align: center;
+  background: rgba(240, 235, 235, 0.9); /* Slightly transparent white */
+  border-radius: 16px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* 🎨 Header Section */
+.header {
+  margin-bottom: 25px;
+}
+
+.header h2 {
+  color: #333333;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* 🔧 Logo Style */
+.logo {
+  width: 80px;
+  height: auto;
+}
+
+/* 📝 Form Styling - Make sure no elements extend outside container */
+.login-form {
+  text-align: left;
+  width: 100%;
+}
+
+/* 📝 Input Group Styling */
+.input-group {
+  display: flex;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.input-group:focus-within {
+  border-color: #1cbe55;
+  box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.1);
+}
+
+.input-group label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
+  opacity: 0.7;
+}
+
+input {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 15px;
+  padding: 2px 0;
+  color: #333333;
+  background: transparent;
+}
+
+input::placeholder {
+  color: #9e9e9e;
+}
+
+/* 🔄 Links Styling */
+.forgot-password {
+  text-align: right;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.forgot-password a,
+.signup-link a {
+  color: #1db954;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.forgot-password a:hover,
+.signup-link a:hover {
+  color: #18a64a;
+  text-decoration: underline;
+}
+
+/* 🔥 Login Button */
+.login-btn {
+  width: 100%;
+  padding: 14px;
+  background: #1db954;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 5px;
+}
+
+.login-btn:hover {
+  background: #18a64a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(29, 185, 84, 0.25);
+}
+
+.login-btn:active {
+  transform: translateY(0);
+}
+
+/* 📱 Signup Link */
+.signup-link {
+  margin-top: 20px;
+  color: #333333;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* 🧩 Submit Container */
+.submit-container {
+  margin-bottom: 15px;
+}
